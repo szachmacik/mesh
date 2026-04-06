@@ -10,7 +10,8 @@ RUN apk add --no-cache \
     docker-cli \
     openssh-client
 
-COPY ssh-executor-service.js .
+# Copy from mcp-server directory (context is repo root, dockerfile is in mcp-server/)
+COPY mcp-server/ssh-executor-service.js ./ssh-executor-service.js
 
 ENV PORT=3022
 ENV AUTH_TOKEN=change-me-in-production
