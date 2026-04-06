@@ -12,6 +12,8 @@ services:
     environment:
       - PORT=3022
       - AUTH_TOKEN=${AUTH_TOKEN:-change-me}
+      - MAX_TIMEOUT=300
+      - MAX_OUTPUT_SIZE=1048576
       - COOLIFY_URL=${COOLIFY_URL:-https://coolify.ofshore.dev}
       - COOLIFY_TOKEN=${COOLIFY_TOKEN}
     volumes:
@@ -21,3 +23,4 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
+      start_period: 10s
