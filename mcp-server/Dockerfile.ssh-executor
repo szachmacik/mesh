@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install useful CLI tools for SSH operations
+# Install useful CLI tools
 RUN apk add --no-cache \
     bash \
     curl \
@@ -10,17 +10,18 @@ RUN apk add --no-cache \
     docker-cli \
     openssh-client
 
-# Copy from mcp-server directory (context is repo root, dockerfile is in mcp-server/)
+# Copy service
 COPY mcp-server/ssh-executor-service.js ./ssh-executor-service.js
 
 ENV PORT=3022
 ENV AUTH_TOKEN=change-me-in-production
 ENV MAX_TIMEOUT=300
 ENV MAX_OUTPUT_SIZE=1048576
+ENV COOLIFY_URL=https://coolify.ofshore.dev
+ENV COOLIFY_TOKEN=
 
 EXPOSE 3022
 
-# Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:3022/health || exit 1
 
