@@ -3,8 +3,8 @@ version: '3.8'
 services:
   ssh-executor:
     build:
-      context: .
-      dockerfile: Dockerfile.ssh-executor
+      context: ..
+      dockerfile: mcp-server/Dockerfile.ssh-executor
     container_name: ssh-executor
     restart: unless-stopped
     ports:
