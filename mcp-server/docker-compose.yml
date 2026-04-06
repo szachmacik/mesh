@@ -11,32 +11,13 @@ services:
       - "3022:3022"
     environment:
       - PORT=3022
-      - AUTH_TOKEN=${SSH_AUTH_TOKEN}
-      - MAX_TIMEOUT=300
-      - MAX_OUTPUT_SIZE=1048576
+      - AUTH_TOKEN=${AUTH_TOKEN:-change-me}
+      - COOLIFY_URL=${COOLIFY_URL:-https://coolify.ofshore.dev}
+      - COOLIFY_TOKEN=${COOLIFY_TOKEN}
     volumes:
-      # Mount Docker socket for container management
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      # Mount common directories for file operations
-      - /root:/host/root:ro
-      - /etc:/host/etc:ro
-      - /var/log:/host/logs:ro
-    networks:
-      - coolify
-    labels:
-      - "coolify.managed=true"
-      - "traefik.enable=true"
-      - "traefik.http.routers.ssh-executor.rule=Host(`ssh-executor.ofshore.dev`)"
-      - "traefik.http.routers.ssh-executor.entrypoints=https"
-      - "traefik.http.routers.ssh-executor.tls=true"
-      - "traefik.http.services.ssh-executor.loadbalancer.server.port=3022"
+      - /var/run/docker.sock:/var/run/docker.sock
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3022/health"]
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
-
-networks:
-  coolify:
-    external: true
