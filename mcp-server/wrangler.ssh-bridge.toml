@@ -1,0 +1,18 @@
+name = "ssh-bridge"
+main = "src/ssh-bridge.ts"
+compatibility_date = "2024-12-01"
+account_id = "9a877cdba770217082a2f914427df505"
+
+# Custom domain
+routes = [
+  { pattern = "ssh-bridge.ofshore.dev", custom_domain = true }
+]
+
+[vars]
+SSH_HOST = "178.62.246.169"
+SSH_USER = "root"
+COOLIFY_URL = "https://coolify.ofshore.dev"
+
+# Set secrets with:
+# wrangler secret put AUTH_TOKEN -c wrangler.ssh-bridge.toml
+# wrangler secret put COOLIFY_TOKEN -c wrangler.ssh-bridge.toml
