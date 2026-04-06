@@ -1,28 +1,27 @@
 FROM node:20-alpine
 
+# Install Docker CLI, docker-compose, and useful tools
+RUN apk add --no-cache \
+    docker-cli \
+    docker-cli-compose \
+    curl \
+    bash \
+    findutils \
+    grep \
+    && rm -rf /var/cache/apk/*
+
 WORKDIR /app
 
-# Install useful CLI tools
-RUN apk add --no-cache \
-    bash \
-    curl \
-    jq \
-    docker-cli \
-    openssh-client
-
-# Copy service
+# Copy the service
 COPY mcp-server/ssh-executor-service.js ./ssh-executor-service.js
 
+# Default port
 ENV PORT=3022
-ENV AUTH_TOKEN=change-me-in-production
-ENV MAX_TIMEOUT=300
-ENV MAX_OUTPUT_SIZE=1048576
-ENV COOLIFY_URL=https://coolify.ofshore.dev
-ENV COOLIFY_TOKEN=
 
 EXPOSE 3022
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3022/health || exit 1
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3022/health || exit 1
 
 CMD ["node", "ssh-executor-service.js"]
