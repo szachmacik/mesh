@@ -1,20 +1,9 @@
-name = "ssh-mcp-server"
+name = "ssh-executor-worker"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
 account_id = "9a877cdba770217082a2f914427df505"
 
-# Custom domain
-routes = [
-  { pattern = "ssh-mcp.ofshore.dev", custom_domain = true }
-]
-
-# Environment variables (secrets should be set via wrangler secret)
 [vars]
 SSH_HOST = "178.62.246.169"
 SSH_USER = "root"
-
-# Bindings - secrets
-# Set these with:
-# wrangler secret put AUTH_TOKEN
-# wrangler secret put SSH_PRIVATE_KEY
-# wrangler secret put COOLIFY_TOKEN
+COOLIFY_URL = "https://coolify.ofshore.dev"

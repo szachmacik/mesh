@@ -1,26 +1,15 @@
 {
   "name": "ssh-mcp-server",
   "version": "1.0.0",
-  "description": "MCP Server for SSH access to DigitalOcean infrastructure",
+  "description": "SSH Executor Worker for DigitalOcean infrastructure",
   "type": "module",
-  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "deploy:ssh-bridge": "wrangler deploy -c wrangler.ssh-bridge.toml",
-    "deploy:all": "npm run deploy && npm run deploy:ssh-bridge"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
-    "zod": "^3.24.0"
+    "deploy:bridge": "wrangler deploy -c wrangler.ssh-bridge.toml"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250402.0",
-    "typescript": "^5.8.0",
     "wrangler": "^4.14.0"
-  },
-  "keywords": ["mcp", "ssh", "cloudflare-workers", "claude"],
-  "author": "ofshore.dev",
-  "license": "MIT"
+  }
 }
