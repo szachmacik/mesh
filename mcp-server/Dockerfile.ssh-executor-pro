@@ -1,0 +1,25 @@
+FROM node:20-alpine
+
+# Install Docker CLI and useful tools
+RUN apk add --no-cache \
+    docker-cli \
+    docker-cli-compose \
+    curl \
+    bash \
+    && rm -rf /var/cache/apk/*
+
+WORKDIR /app
+
+# Copy the PRO service
+COPY mcp-server/ssh-executor-pro.js ./server.js
+
+# Default port for PRO version
+ENV PORT=3024
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:3024/health || exit 1
+
+EXPOSE 3024
+
+CMD ["node", "server.js"]
