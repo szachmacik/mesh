@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  ssh-executor-pro:
+    build:
+      context: ..
+      dockerfile: mcp-server/Dockerfile.ssh-executor-pro
+    container_name: ssh-executor-pro
+    restart: unless-stopped
+    ports:
+      - "3024:3024"
+    environment:
+      - PORT=3024
+      - AUTH_TOKEN=${AUTH_TOKEN:-b554f5dce9ce925e9da21b44f288cdf402c8daabbff56fe7d7ed60fe60e771d5}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /home:/home:rw
+      - /opt:/opt:rw
+      - /root:/root:rw
+      - /data:/data:rw
+    networks:
+      - coolify
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3024/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  coolify:
+    external: true
